@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Theme -->
+    <style name="Theme.CyberPulse" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/dark_background</item>
+        <item name="android:statusBarColor">@color/dark_background</item>
+        <item name="android:navigationBarColor">@color/dark_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+    
+    <!-- Splash Theme -->
+    <style name="Theme.CyberPulse.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/dark_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.CyberPulse</item>
+    </style>
+</resources>

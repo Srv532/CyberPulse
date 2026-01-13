@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- CyberPulse Color Palette -->
+    
+    <!-- Primary - Neon Cyan -->
+    <color name="cyber_cyan">#00F5FF</color>
+    <color name="cyber_cyan_dark">#00C4CC</color>
+    
+    <!-- Secondary - Neon Green -->
+    <color name="cyber_green">#00FF7F</color>
+    
+    <!-- Accent Colors -->
+    <color name="cyber_red">#FF3366</color>
+    <color name="cyber_orange">#FF9933</color>
+    <color name="cyber_purple">#9966FF</color>
+    <color name="cyber_yellow">#FFE033</color>
+    
+    <!-- Backgrounds -->
+    <color name="dark_background">#0A0E17</color>
+    <color name="dark_surface">#0F1624</color>
+    <color name="dark_card">#151C2C</color>
+    
+    <!-- Text -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0BEC5</color>
+    <color name="text_tertiary">#78909C</color>
+</resources>

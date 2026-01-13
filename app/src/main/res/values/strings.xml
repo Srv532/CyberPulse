@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CyberPulse</string>
+    <string name="app_tagline">Your Privacy-First Security Companion</string>
+    
+    <!-- Authentication -->
+    <string name="sign_in_with_google">Continue with Google</string>
+    <string name="sign_out">Sign Out</string>
+    
+    <!-- Data Sovereignty -->
+    <string name="data_control_title">Your Data, Your Control</string>
+    <string name="data_control_description">Choose what data CyberPulse can store. You can change these settings anytime from your profile.</string>
+    <string name="stateless_mode">Stateless Mode</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_breach_radar">Breach Radar</string>
+    <string name="nav_academy">Academy</string>
+    <string name="nav_events">Events</string>
+    
+    <!-- Features -->
+    <string name="daily_tip">Daily Security Tip</string>
+    <string name="hibp_check">Am I Pwned?</string>
+    <string name="cve_lookup">CVE Lookup</string>
+    
+    <!-- Actions -->
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="search">Search</string>
+    <string name="refresh">Refresh</string>
+    <string name="try_again">Try Again</string>
+    
+    <!-- Errors -->
+    <string name="error_generic">Something went wrong</string>
+    <string name="error_network">Please check your internet connection</string>
+</resources>
