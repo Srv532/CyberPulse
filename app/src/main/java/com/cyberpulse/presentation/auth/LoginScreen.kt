@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cyberpulse.ui.theme.*
+import com.cyberpulse.BuildConfig
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -526,7 +527,7 @@ private fun buildSignInRequest(): BeginSignInRequest {
         .setGoogleIdTokenRequestOptions(
             BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                 .setSupported(true)
-                .setServerClientId("YOUR_WEB_CLIENT_ID") // Replace with actual client ID
+                .setServerClientId(BuildConfig.GOOGLE_WEB_CLIENT_ID)
                 .setFilterByAuthorizedAccounts(false)
                 .build()
         )

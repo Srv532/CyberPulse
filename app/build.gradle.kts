@@ -22,6 +22,7 @@ android {
         
         buildConfigField("String", "NEWS_API_KEY", "\"${getProps("NEWS_API_KEY")}\"")
         buildConfigField("String", "HIBP_API_KEY", "\"${getProps("HIBP_API_KEY")}\"")
+        buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", "\"${getProps("GOOGLE_WEB_CLIENT_ID")}\"")
     }
 
     buildTypes {
