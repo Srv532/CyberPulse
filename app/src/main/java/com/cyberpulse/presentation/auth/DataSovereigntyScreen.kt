@@ -58,6 +58,9 @@ fun DataSovereigntyScreen(
     var cacheFeedsOffline by remember { mutableStateOf(true) }
     var enableNotifications by remember { mutableStateOf(true) }
     
+    // Feature 23: Screenshot Blocker
+    com.cyberpulse.presentation.components.SecureScreenEffect()
+    
     // Entrance animations
     var isVisible by remember { mutableStateOf(false) }
     var cardsVisible by remember { mutableStateOf(false) }

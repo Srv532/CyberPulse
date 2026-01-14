@@ -299,8 +299,6 @@ fun UserTerminalDrawer(
                     }
                 }
                 
-                Spacer(modifier = Modifier.weight(1f))
-                
                 // Sign out button
                 AnimatedVisibility(
                     visible = showContent,
@@ -308,12 +306,24 @@ fun UserTerminalDrawer(
                         initialOffsetY = { 30 }
                     )
                 ) {
-                    SignOutButton(
-                        onClick = {
-                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                            onSignOutClick()
-                        }
-                    )
+                    Column {
+                        SignOutButton(
+                            onClick = {
+                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                onSignOutClick()
+                            }
+                        )
+                        
+                        // Feature 1: The Kill Switch (Hidden by default, visible here for awareness)
+                        Spacer(modifier = Modifier.height(12.dp))
+                        KillSwitchButton(
+                            onClick = {
+                                haptic.performHapticFeedback(HapticFeedbackType.Reject)
+                                // In real app, prompt confirmation dialog then wipe everything
+                                onSignOutClick() // Logic reuse for now
+                            }
+                        )
+                    }
                 }
                 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -728,6 +738,49 @@ private fun SignOutButton(onClick: () -> Unit) {
                     fontWeight = FontWeight.SemiBold
                 ),
                 color = CyberRed
+            )
+        }
+    }
+}
+
+    }
+}
+
+@Composable
+private fun KillSwitchButton(onClick: () -> Unit) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = onClick,
+        shape = RoundedCornerShape(12.dp),
+        color = Color(0xFF220000), // Deep red background
+        border = androidx.compose.foundation.BorderStroke(
+            width = 1.dp,
+            color = Color(0xFFFF0000).copy(alpha = 0.5f)
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(14.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.DeleteForever,
+                contentDescription = null,
+                tint = Color(0xFFFF0000),
+                modifier = Modifier.size(18.dp)
+            )
+            
+            Spacer(modifier = Modifier.width(8.dp))
+            
+            Text(
+                text = "KILL SWITCH",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 1.sp
+                ),
+                color = Color(0xFFFF0000)
             )
         }
     }

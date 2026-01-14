@@ -38,7 +38,7 @@ val CyberYellow = Color(0xFFFFE033)         // Events/Hackathons
 // ═══════════════════════════════════════════════════════════════════
 // BACKGROUND COLORS - Deep Blues & Blacks
 // ═══════════════════════════════════════════════════════════════════
-val DarkBackground = Color(0xFF0A0E17)      // Deepest black-blue
+val DarkBackground = Color(0xFF000000)      // True Black (OLED)
 val DarkSurface = Color(0xFF0F1624)         // Slightly lighter surface
 val DarkCard = Color(0xFF151C2C)            // Card backgrounds
 val DarkCardElevated = Color(0xFF1A2238)    // Elevated cards
