@@ -111,11 +111,11 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
+            position: relative;
         }
 
         .refresh-btn:hover {
             background: #eee;
-            transform: rotate(90deg);
         }
 
         .refresh-btn.loading svg {
@@ -136,6 +136,16 @@
             width: 20px;
             height: 20px;
             fill: var(--text-secondary);
+        }
+
+        .refresh-timer {
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: var(--text-muted);
+            white-space: nowrap;
         }
 
         .content {
@@ -173,50 +183,36 @@
             font-family: inherit;
         }
 
-        .search-bar input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .quick-links {
+        .categories {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 16px;
             overflow-x: auto;
             padding-bottom: 4px;
         }
 
-        .quick-links::-webkit-scrollbar {
+        .categories::-webkit-scrollbar {
             display: none;
         }
 
-        .quick-link {
+        .category-chip {
             flex-shrink: 0;
             background: white;
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            border-radius: 20px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .quick-link:hover {
+        .category-chip:hover,
+        .category-chip.active {
+            background: var(--primary);
             border-color: var(--primary);
-            background: #FFF5F5;
-            transform: translateY(-2px);
-        }
-
-        .quick-link svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .quick-link span {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text);
+            color: white;
         }
 
         .section-head {
@@ -264,7 +260,6 @@
             }
         }
 
-        /* News Card - Expandable */
         .news-card {
             background: white;
             border-radius: 16px;
@@ -293,7 +288,7 @@
             position: relative;
             background-size: cover;
             background-position: center;
-            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: height 0.4s;
         }
 
         .news-card.expanded .news-img {
@@ -310,7 +305,6 @@
             font-weight: 600;
             padding: 4px 8px;
             border-radius: 6px;
-            text-transform: uppercase;
         }
 
         .expand-icon {
@@ -376,7 +370,6 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            transition: all 0.4s;
         }
 
         .news-card.expanded .news-summary {
@@ -384,7 +377,6 @@
             display: block;
         }
 
-        /* Expanded Content */
         .news-expanded {
             max-height: 0;
             overflow: hidden;
@@ -480,12 +472,6 @@
             fill: white;
         }
 
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 12px 14px;
-        }
-
         .tags-row {
             display: flex;
             gap: 6px;
@@ -502,7 +488,6 @@
             color: var(--text-secondary);
         }
 
-        /* Loading */
         .loading-card {
             background: white;
             border-radius: 16px;
@@ -530,7 +515,6 @@
         .error-msg {
             text-align: center;
             padding: 40px 20px;
-            color: var(--text-secondary);
         }
 
         .error-msg svg {
@@ -571,75 +555,113 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 280px;
+            width: 300px;
             height: 100%;
             background: white;
             transform: translateX(-100%);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
-            padding: 24px 20px;
+            overflow-y: auto;
         }
 
         .drawer.open {
             transform: translateX(0);
         }
 
-        .drawer-profile {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 20px;
+        .drawer::-webkit-scrollbar {
+            width: 0;
         }
 
-        .drawer-avatar {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
+        .drawer-header {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 600;
+            padding: 32px 20px 24px;
             color: white;
         }
 
+        .drawer-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
         .drawer-name {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
-            color: var(--text);
         }
 
         .drawer-email {
             font-size: 12px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .drawer-section {
+            padding: 16px 0;
+        }
+
+        .drawer-section-title {
+            font-size: 11px;
+            font-weight: 600;
             color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 20px 12px;
         }
 
         .drawer-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 14px 0;
+            gap: 14px;
+            padding: 14px 20px;
             cursor: pointer;
-            border-bottom: 1px solid var(--border);
             transition: all 0.2s;
         }
 
         .drawer-item:hover {
-            padding-left: 8px;
+            background: var(--surface);
         }
 
         .drawer-item svg {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
         }
 
-        .drawer-item span {
+        .drawer-item-content {
+            flex: 1;
+        }
+
+        .drawer-item-title {
             font-size: 14px;
-            color: var(--text);
             font-weight: 500;
+            color: var(--text);
+        }
+
+        .drawer-item-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .drawer-item-badge {
+            background: var(--primary);
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .drawer-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0 20px;
         }
     </style>
 </head>
@@ -649,42 +671,109 @@
         <div class="phone-screen" id="home">
             <div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
             <div class="drawer" id="drawer">
-                <div class="drawer-profile">
+                <div class="drawer-header">
                     <div class="drawer-avatar">S</div>
-                    <div>
-                        <div class="drawer-name">Srv532</div>
-                        <div class="drawer-email">srv532@github.com</div>
+                    <div class="drawer-name">Srv532</div>
+                    <div class="drawer-email">srv532@github.com</div>
+                </div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Your Library</div>
+                    <div class="drawer-item">
+                        <svg fill="#E23744" viewBox="0 0 24 24">
+                            <path d="M17,3H7A2,2 0 0,0 5,5V21L12,18L19,21V5A2,2 0 0,0 17,3Z" />
+                        </svg>
+                        <div class="drawer-item-content">
+                            <div class="drawer-item-title">Saved Articles</div>
+                            <div class="drawer-item-desc">Your bookmarked news</div>
+                        </div>
+                        <span class="drawer-item-badge">3</span>
+                    </div>
+                    <div class="drawer-item">
+                        <svg fill="#4CAF50" viewBox="0 0 24 24">
+                            <path
+                                d="M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z" />
+                        </svg>
+                        <div class="drawer-item-content">
+                            <div class="drawer-item-title">Reading History</div>
+                            <div class="drawer-item-desc">Recently viewed</div>
+                        </div>
                     </div>
                 </div>
-                <div class="drawer-item" onclick="window.open('https://haveibeenpwned.com','_blank')"><svg
-                        fill="#E23744" viewBox="0 0 24 24">
-                        <path d="M12,1L3,5V11C3,16.55,6.84,21.74,12,23C17.16,21.74,21,16.55,21,11V5L12,1Z" />
-                    </svg><span>Am I Pwned?</span></div>
-                <div class="drawer-item" onclick="window.open('https://cve.mitre.org','_blank')"><svg fill="#FF9800"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M14,12H10V10H14M14,16H10V14H14M20,8H17.19C16.74,7.22 16.12,6.55 15.37,6.04L17,4.41L15.59,3L13.42,5.17C12.96,5.06 12.5,5 12,5S11.04,5.06 10.59,5.17L8.41,3L7,4.41L8.62,6.04C7.88,6.55 7.26,7.22 6.81,8H4V10H6.09C6.04,10.33 6,10.66 6,11V12H4V14H6V15C6,15.34 6.04,15.67 6.09,16H4V18H6.81C7.85,19.79 9.78,21 12,21C14.22,21 16.15,19.79 17.19,18H20V16H17.91C17.96,15.67 18,15.34 18,15V14H20V12H18V11C18,10.66 17.96,10.33 17.91,10H20Z" />
-                    </svg><span>CVE Lookup</span></div>
-                <div class="drawer-item"><svg fill="#696969" viewBox="0 0 24 24">
-                        <path d="M17,3H7A2,2 0 0,0 5,5V21L12,18L19,21V5A2,2 0 0,0 17,3Z" />
-                    </svg><span>Saved Articles</span></div>
-                <div class="drawer-item"><svg fill="#696969" viewBox="0 0 24 24">
-                        <path
-                            d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
-                    </svg><span>Settings</span></div>
+
+                <div class="drawer-divider"></div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Security Tools</div>
+                    <div class="drawer-item" onclick="window.open('https://haveibeenpwned.com','_blank')">
+                        <svg fill="#E23744" viewBox="0 0 24 24">
+                            <path d="M12,1L3,5V11C3,16.55,6.84,21.74,12,23C17.16,21.74,21,16.55,21,11V5L12,1Z" />
+                        </svg>
+                        <div class="drawer-item-content">
+                            <div class="drawer-item-title">Am I Pwned?</div>
+                            <div class="drawer-item-desc">Check if your email was breached</div>
+                        </div>
+                    </div>
+                    <div class="drawer-item" onclick="window.open('https://cve.mitre.org','_blank')">
+                        <svg fill="#FF9800" viewBox="0 0 24 24">
+                            <path
+                                d="M14,12H10V10H14M14,16H10V14H14M20,8H17.19C16.74,7.22 16.12,6.55 15.37,6.04L17,4.41L15.59,3L13.42,5.17C12.96,5.06 12.5,5 12,5S11.04,5.06 10.59,5.17L8.41,3L7,4.41L8.62,6.04C7.88,6.55 7.26,7.22 6.81,8H4V10H6.09C6.04,10.33 6,10.66 6,11V12H4V14H6V15C6,15.34 6.04,15.67 6.09,16H4V18H6.81C7.85,19.79 9.78,21 12,21C14.22,21 16.15,19.79 17.19,18H20V16H17.91C17.96,15.67 18,15.34 18,15V14H20V12H18V11C18,10.66 17.96,10.33 17.91,10H20Z" />
+                        </svg>
+                        <div class="drawer-item-content">
+                            <div class="drawer-item-title">CVE Lookup</div>
+                            <div class="drawer-item-desc">Search vulnerability database</div>
+                        </div>
+                    </div>
+                    <div class="drawer-item" onclick="window.open('https://www.exploit-db.com','_blank')">
+                        <svg fill="#7B1FA2" viewBox="0 0 24 24">
+                            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
+                        <div class="drawer-item-content">
+                            <div class="drawer-item-title">Exploit Database</div>
+                            <div class="drawer-item-desc">Browse known exploits</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drawer-divider"></div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Settings</div>
+                    <div class="drawer-item">
+                        <svg fill="#696969" viewBox="0 0 24 24">
+                            <path
+                                d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+                        </svg>
+                        <div class="drawer-item-content">
+                            <div class="drawer-item-title">Preferences</div>
+                            <div class="drawer-item-desc">Notifications & privacy</div>
+                        </div>
+                    </div>
+                    <div class="drawer-item">
+                        <svg fill="#696969" viewBox="0 0 24 24">
+                            <path
+                                d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z" />
+                        </svg>
+                        <div class="drawer-item-content">
+                            <div class="drawer-item-title">About CyberPulse</div>
+                            <div class="drawer-item-desc">Version 1.0.0</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="topbar">
                 <div class="avatar" onclick="openDrawer()">S</div>
                 <div class="topbar-info">
                     <div class="topbar-greeting" id="greeting">Good morning</div>
-                    <div class="topbar-title">CyberPulse Live</div>
+                    <div class="topbar-title">CyberPulse</div>
                 </div>
                 <button class="refresh-btn" id="refreshBtn" onclick="fetchNews()">
                     <svg viewBox="0 0 24 24">
                         <path
                             d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z" />
                     </svg>
+                    <span class="refresh-timer" id="timerDisplay">Auto-refresh in 3:00</span>
                 </button>
             </div>
 
@@ -697,24 +786,16 @@
                     <input type="text" placeholder="Search security news..." id="searchInput" onkeyup="filterNews()">
                 </div>
 
-                <div class="quick-links">
-                    <div class="quick-link" onclick="window.open('https://haveibeenpwned.com','_blank')"><svg
-                            fill="#E23744" viewBox="0 0 24 24">
-                            <path d="M12,1L3,5V11C3,16.55,6.84,21.74,12,23C17.16,21.74,21,16.55,21,11V5L12,1Z" />
-                        </svg><span>HIBP</span></div>
-                    <div class="quick-link" onclick="window.open('https://cve.mitre.org','_blank')"><svg fill="#FF9800"
-                            viewBox="0 0 24 24">
-                            <path
-                                d="M14,12H10V10H14M14,16H10V14H14M20,8H17.19C16.74,7.22 16.12,6.55 15.37,6.04L17,4.41L15.59,3L13.42,5.17C12.96,5.06 12.5,5 12,5S11.04,5.06 10.59,5.17L8.41,3L7,4.41L8.62,6.04C7.88,6.55 7.26,7.22 6.81,8H4V10H6.09C6.04,10.33 6,10.66 6,11V12H4V14H6V15C6,15.34 6.04,15.67 6.09,16H4V18H6.81C7.85,19.79 9.78,21 12,21C14.22,21 16.15,19.79 17.19,18H20V16H17.91C17.96,15.67 18,15.34 18,15V14H20V12H18V11C18,10.66 17.96,10.33 17.91,10H20Z" />
-                        </svg><span>CVE</span></div>
-                    <div class="quick-link" onclick="window.open('https://www.exploit-db.com','_blank')"><svg
-                            fill="#7B1FA2" viewBox="0 0 24 24">
-                            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
-                        </svg><span>Exploits</span></div>
+                <div class="categories">
+                    <div class="category-chip active" onclick="filterByCategory('all', this)">All</div>
+                    <div class="category-chip" onclick="filterByCategory('vulnerability', this)">Vulnerabilities</div>
+                    <div class="category-chip" onclick="filterByCategory('ransomware', this)">Ransomware</div>
+                    <div class="category-chip" onclick="filterByCategory('breach', this)">Breaches</div>
+                    <div class="category-chip" onclick="filterByCategory('malware', this)">Malware</div>
                 </div>
 
                 <div class="section-head">
-                    <h3>Security News</h3>
+                    <h3>Latest News</h3>
                     <div class="live-badge">
                         <div class="live-dot"></div>LIVE
                     </div>
@@ -734,12 +815,30 @@
         ];
 
         const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+        const REFRESH_INTERVAL = 3 * 60 * 1000; // 3 minutes
         let allNews = [];
+        let filteredNews = [];
         let expandedCard = null;
+        let refreshTimer = null;
+        let countdown = 180;
 
         function updateGreeting() {
             const hour = new Date().getHours();
             document.getElementById('greeting').textContent = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+        }
+
+        function startTimer() {
+            countdown = 180;
+            if (refreshTimer) clearInterval(refreshTimer);
+            refreshTimer = setInterval(() => {
+                countdown--;
+                const mins = Math.floor(countdown / 60);
+                const secs = countdown % 60;
+                document.getElementById('timerDisplay').textContent = `Auto-refresh in ${mins}:${secs.toString().padStart(2, '0')}`;
+                if (countdown <= 0) {
+                    fetchNews();
+                }
+            }, 1000);
         }
 
         function showLoading() {
@@ -763,78 +862,50 @@
 
         function getCategory(title) {
             const t = title.toLowerCase();
-            if (t.includes('ransomware')) return { text: 'RANSOMWARE', color: '#E23744' };
-            if (t.includes('zero-day') || t.includes('0-day')) return { text: 'ZERO-DAY', color: '#FF5722' };
-            if (t.includes('vulnerability') || t.includes('cve')) return { text: 'VULNERABILITY', color: '#FF9800' };
-            if (t.includes('breach') || t.includes('leak')) return { text: 'DATA BREACH', color: '#F44336' };
-            if (t.includes('malware')) return { text: 'MALWARE', color: '#9C27B0' };
-            if (t.includes('phishing')) return { text: 'PHISHING', color: '#3F51B5' };
-            if (t.includes('patch') || t.includes('update')) return { text: 'UPDATE', color: '#4CAF50' };
-            return { text: 'SECURITY', color: '#607D8B' };
+            if (t.includes('ransomware')) return { text: 'RANSOMWARE', color: '#E23744', key: 'ransomware' };
+            if (t.includes('zero-day') || t.includes('0-day')) return { text: 'ZERO-DAY', color: '#FF5722', key: 'vulnerability' };
+            if (t.includes('vulnerability') || t.includes('cve')) return { text: 'VULNERABILITY', color: '#FF9800', key: 'vulnerability' };
+            if (t.includes('breach') || t.includes('leak')) return { text: 'DATA BREACH', color: '#F44336', key: 'breach' };
+            if (t.includes('malware')) return { text: 'MALWARE', color: '#9C27B0', key: 'malware' };
+            if (t.includes('phishing')) return { text: 'PHISHING', color: '#3F51B5', key: 'malware' };
+            if (t.includes('patch') || t.includes('update')) return { text: 'UPDATE', color: '#4CAF50', key: 'vulnerability' };
+            return { text: 'SECURITY', color: '#607D8B', key: 'all' };
         }
 
         function generateKeyPoints(title, desc) {
             const points = [];
             const sentences = (desc || '').split(/[.!?]+/).filter(s => s.trim().length > 20);
-
-            // Add title as first point if it's informative
-            if (title.length > 30) {
-                points.push(title.replace(/^[^:]+:\s*/, ''));
-            }
-
-            // Add first 3 meaningful sentences
-            sentences.slice(0, 3).forEach(s => {
-                const clean = s.trim();
-                if (clean.length > 20 && clean.length < 200) {
-                    points.push(clean);
-                }
-            });
-
-            // Generate contextual points if we don't have enough
+            if (title.length > 30) points.push(title.replace(/^[^:]+:\s*/, ''));
+            sentences.slice(0, 3).forEach(s => { if (s.trim().length > 20 && s.trim().length < 200) points.push(s.trim()); });
             const t = title.toLowerCase();
             if (points.length < 3) {
-                if (t.includes('vulnerability') || t.includes('cve')) points.push('Security patch recommended immediately');
-                if (t.includes('ransomware')) points.push('Backup your data and verify email sources');
+                if (t.includes('vulnerability')) points.push('Apply security patches immediately');
+                if (t.includes('ransomware')) points.push('Backup data and verify email sources');
                 if (t.includes('breach')) points.push('Change passwords for affected accounts');
-                if (t.includes('phishing')) points.push('Verify sender identity before clicking links');
-                if (t.includes('malware')) points.push('Run antivirus scan on all devices');
-                points.push('Stay updated with security news');
+                points.push('Stay updated with security advisories');
             }
-
             return points.slice(0, 4);
         }
 
         function getTags(title) {
             const tags = [];
             const t = title.toLowerCase();
-            if (t.includes('windows')) tags.push('Windows');
-            if (t.includes('linux')) tags.push('Linux');
-            if (t.includes('android')) tags.push('Android');
-            if (t.includes('apple') || t.includes('ios') || t.includes('macos')) tags.push('Apple');
-            if (t.includes('google') || t.includes('chrome')) tags.push('Google');
-            if (t.includes('microsoft')) tags.push('Microsoft');
-            if (t.includes('cloud') || t.includes('aws') || t.includes('azure')) tags.push('Cloud');
-            if (t.includes('ai') || t.includes('artificial')) tags.push('AI');
+            ['Windows', 'Linux', 'Android', 'Apple', 'Google', 'Microsoft', 'Cloud', 'AI'].forEach(tag => {
+                if (t.includes(tag.toLowerCase())) tags.push(tag);
+            });
             return tags.slice(0, 3);
         }
 
         function parseRSS(xml, source, color) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(xml, 'text/xml');
-            return Array.from(doc.querySelectorAll('item')).slice(0, 5).map(item => {
+            return Array.from(doc.querySelectorAll('item')).slice(0, 6).map(item => {
                 const title = item.querySelector('title')?.textContent || '';
                 const link = item.querySelector('link')?.textContent || '';
-                const rawDesc = item.querySelector('description')?.textContent || '';
-                const desc = rawDesc.replace(/<[^>]*>/g, '').substring(0, 500);
+                const desc = (item.querySelector('description')?.textContent || '').replace(/<[^>]*>/g, '').substring(0, 500);
                 const pubDate = item.querySelector('pubDate')?.textContent || new Date().toISOString();
                 const img = item.querySelector('enclosure')?.getAttribute('url') || item.innerHTML.match(/src="([^"]+\.(jpg|png|jpeg|webp))"/i)?.[1] || null;
-                return {
-                    title, link, desc, pubDate, source, color, img,
-                    category: getCategory(title),
-                    keyPoints: generateKeyPoints(title, desc),
-                    tags: getTags(title),
-                    id: Math.random().toString(36).substr(2, 9)
-                };
+                return { title, link, desc, pubDate, source, color, img, category: getCategory(title), keyPoints: generateKeyPoints(title, desc), tags: getTags(title), id: Math.random().toString(36).substr(2, 9) };
             });
         }
 
@@ -842,56 +913,40 @@
             const btn = document.getElementById('refreshBtn');
             btn.classList.add('loading');
             showLoading();
+            startTimer();
 
             try {
                 const results = await Promise.allSettled(
-                    RSS_FEEDS.map(feed =>
-                        fetch(CORS_PROXY + encodeURIComponent(feed.url))
-                            .then(r => r.text())
-                            .then(xml => parseRSS(xml, feed.source, feed.color))
-                    )
+                    RSS_FEEDS.map(feed => fetch(CORS_PROXY + encodeURIComponent(feed.url)).then(r => r.text()).then(xml => parseRSS(xml, feed.source, feed.color)))
                 );
-
-                allNews = results.filter(r => r.status === 'fulfilled').flatMap(r => r.value)
-                    .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-
+                allNews = results.filter(r => r.status === 'fulfilled').flatMap(r => r.value).sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
                 if (allNews.length === 0) throw new Error('No news');
-                renderNews(allNews);
+                filteredNews = allNews;
+                renderNews(filteredNews);
             } catch (err) {
-                document.getElementById('newsFeed').innerHTML = `
-                    <div class="error-msg">
-                        <svg viewBox="0 0 24 24"><path d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"/></svg>
-                        <p>Unable to load news</p>
-                        <button onclick="fetchNews()">Try Again</button>
-                    </div>
-                `;
+                document.getElementById('newsFeed').innerHTML = `<div class="error-msg"><svg viewBox="0 0 24 24"><path d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"/></svg><p>Unable to load news</p><button onclick="fetchNews()">Try Again</button></div>`;
             } finally {
                 btn.classList.remove('loading');
             }
         }
 
+        function filterByCategory(key, el) {
+            document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            filteredNews = key === 'all' ? allNews : allNews.filter(n => n.category.key === key);
+            renderNews(filteredNews);
+        }
+
         function toggleCard(id, event) {
             event.stopPropagation();
             const card = document.getElementById('card-' + id);
-
-            if (expandedCard && expandedCard !== card) {
-                expandedCard.classList.remove('expanded');
-            }
-
+            if (expandedCard && expandedCard !== card) expandedCard.classList.remove('expanded');
             card.classList.toggle('expanded');
             expandedCard = card.classList.contains('expanded') ? card : null;
-
-            if (expandedCard) {
-                setTimeout(() => {
-                    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
-            }
+            if (expandedCard) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
         }
 
-        function openArticle(url, event) {
-            event.stopPropagation();
-            window.open(url, '_blank');
-        }
+        function openArticle(url, event) { event.stopPropagation(); window.open(url, '_blank'); }
 
         function renderNews(news) {
             document.getElementById('newsFeed').innerHTML = news.map(item => `
@@ -899,40 +954,21 @@
                     <div class="news-header">
                         <div class="news-img" style="${item.img ? `background-image: url('${item.img}')` : `background: linear-gradient(135deg, ${item.color}66, ${item.color})`}">
                             <div class="news-badge" style="background: ${item.category.color}">${item.category.text}</div>
-                            <div class="expand-icon">
-                                <svg viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
-                            </div>
+                            <div class="expand-icon"><svg viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg></div>
                         </div>
                     </div>
                     <div class="news-body">
-                        <div class="news-meta">
-                            <span class="news-source" style="color: ${item.color}">${item.source}</span>
-                            <span style="color: #9B9B9B">•</span>
-                            <span class="news-time">${timeAgo(item.pubDate)}</span>
-                        </div>
+                        <div class="news-meta"><span class="news-source" style="color: ${item.color}">${item.source}</span><span style="color: #9B9B9B">•</span><span class="news-time">${timeAgo(item.pubDate)}</span></div>
                         <h4 class="news-title">${item.title}</h4>
                         <p class="news-summary">${item.desc}...</p>
                         ${item.tags.length ? `<div class="tags-row">${item.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
                     </div>
                     <div class="news-expanded">
                         <div class="key-points">
-                            <div class="key-points-title">
-                                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/></svg>
-                                Key Points
-                            </div>
-                            ${item.keyPoints.map(p => `
-                                <div class="key-point">
-                                    <div class="key-point-dot"></div>
-                                    <div class="key-point-text">${p}</div>
-                                </div>
-                            `).join('')}
+                            <div class="key-points-title"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/></svg>Key Points</div>
+                            ${item.keyPoints.map(p => `<div class="key-point"><div class="key-point-dot"></div><div class="key-point-text">${p}</div></div>`).join('')}
                         </div>
-                        <div class="read-more-section">
-                            <button class="read-full-btn" onclick="openArticle('${item.link}', event)">
-                                Read Full Article
-                                <svg viewBox="0 0 24 24"><path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/></svg>
-                            </button>
-                        </div>
+                        <div class="read-more-section"><button class="read-full-btn" onclick="openArticle('${item.link}', event)">Read Full Article <svg viewBox="0 0 24 24"><path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/></svg></button></div>
                     </div>
                 </div>
             `).join('');
@@ -940,7 +976,7 @@
 
         function filterNews() {
             const q = document.getElementById('searchInput').value.toLowerCase();
-            renderNews(q ? allNews.filter(n => n.title.toLowerCase().includes(q) || n.desc.toLowerCase().includes(q)) : allNews);
+            renderNews(q ? allNews.filter(n => n.title.toLowerCase().includes(q) || n.desc.toLowerCase().includes(q)) : filteredNews);
         }
 
         function openDrawer() { document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
@@ -948,7 +984,6 @@
 
         updateGreeting();
         fetchNews();
-        setInterval(fetchNews, 5 * 60 * 1000);
     </script>
 </body>
 
