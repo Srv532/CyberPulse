@@ -28,6 +28,11 @@ object DatabaseModule {
             CyberPulseDatabase::class.java,
             CyberPulseDatabase.DATABASE_NAME
         )
+            .openHelperFactory(
+                net.sqlcipher.database.SupportFactory(
+                    net.sqlcipher.database.SQLiteDatabase.getBytes("your-secure-passphrase".toCharArray()) // TODO: Replace with KeyStore-derived key
+                )
+            )
             .fallbackToDestructiveMigration()
             .build()
     }

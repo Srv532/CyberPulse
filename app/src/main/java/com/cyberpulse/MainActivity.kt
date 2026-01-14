@@ -28,6 +28,11 @@ class MainActivity : ComponentActivity() {
         
         super.onCreate(savedInstanceState)
         
+        // Anti-Tampering: Detect Debugger
+        if (!BuildConfig.DEBUG && android.os.Debug.isDebuggerConnected()) {
+            android.os.Process.killProcess(android.os.Process.myPid())
+        }
+        
         // Initialize Firebase App Check
         com.google.firebase.FirebaseApp.initializeApp(this)
         val firebaseAppCheck = com.google.firebase.appcheck.FirebaseAppCheck.getInstance()

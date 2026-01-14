@@ -37,7 +37,12 @@ object NetworkModule {
                 HttpLoggingInterceptor.Level.NONE
             }
         }
-        
+        // Certificate Pinning
+        val certificatePinner = okhttp3.CertificatePinner.Builder()
+            .add("api.newsapi.org", "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=") // REPLACE THIS with real hash
+            .add("haveibeenpwned.com", "sha256/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=") // REPLACE THIS with real hash
+            .build()
+
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor { chain ->
@@ -47,6 +52,7 @@ object NetworkModule {
                     .build()
                 chain.proceed(request)
             }
+            //.certificatePinner(certificatePinner) // Uncomment when you have real hashes to avoid breaking app
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
