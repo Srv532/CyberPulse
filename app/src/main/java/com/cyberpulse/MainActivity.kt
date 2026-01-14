@@ -28,6 +28,13 @@ class MainActivity : ComponentActivity() {
         
         super.onCreate(savedInstanceState)
         
+        // Initialize Firebase App Check
+        com.google.firebase.FirebaseApp.initializeApp(this)
+        val firebaseAppCheck = com.google.firebase.appcheck.FirebaseAppCheck.getInstance()
+        firebaseAppCheck.installAppCheckProviderFactory(
+            com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory.getInstance()
+        )
+        
         // Enable edge-to-edge display
         enableEdgeToEdge()
         

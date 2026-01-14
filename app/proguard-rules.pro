@@ -1,39 +1,46 @@
 # ProGuard rules for CyberPulse
 
-# Keep Kotlin metadata
+# General
 -keepattributes *Annotation*
 -keepattributes Signature
 -keepattributes InnerClasses
+-keepattributes EnclosingMethod
 
-# Retrofit
+# Compose
+-keepclassmembers class * {
+    @androidx.compose.runtime.Composable *;
+}
+-keep class androidx.compose.** { *; }
+
+# Retrofit & OkHttp
 -keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
 -keepclassmembers,allowshrinking,allowobfuscation interface * {
     @retrofit2.http.* <methods>;
 }
--dontwarn retrofit2.**
--keep class retrofit2.** { *; }
-
-# OkHttp
 -dontwarn okhttp3.**
--keep class okhttp3.** { *; }
+-dontwarn retrofit2.**
 -dontwarn okio.**
 
-# Gson
--keepattributes Signature
--keep class com.google.gson.** { *; }
+# Gson & DTOs (Must keep for serialization)
 -keep class com.cyberpulse.data.remote.dto.** { *; }
+-keep class com.cyberpulse.domain.model.** { *; }
 
-# Room
+# Room (Database)
 -keep class * extends androidx.room.RoomDatabase
 -keep @androidx.room.Entity class *
+-dontwarn androidx.room.paging.**
 
-# Firebase
+# Hilt & Dagger
+-keep class dagger.hilt.** { *; }
+-keep class javax.inject.** { *; }
+-keepclasseswithmembers class * {
+    @dagger.hilt.android.lifecycle.HiltViewModel <init>(...);
+}
+
+# Firebase & Google Play Services
 -keep class com.google.firebase.** { *; }
 -keep class com.google.android.gms.** { *; }
 
-# Hilt
--keep class dagger.hilt.** { *; }
--keep class javax.inject.** { *; }
-
-# Keep domain models
--keep class com.cyberpulse.domain.model.** { *; }
+# App Specific - Allow Obfuscation for everything else
+# Specifically, we DO NOT keep ViewModels, Repositories, or UseCases by name
+# They will be renamed to a.b.c stuff, which is what we want for security.

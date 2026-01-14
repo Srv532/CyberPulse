@@ -20,8 +20,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
         
-        buildConfigField("String", "NEWS_API_KEY", "\"${project.findProperty("NEWS_API_KEY") ?: ""}\"")
-        buildConfigField("String", "HIBP_API_KEY", "\"${project.findProperty("HIBP_API_KEY") ?: ""}\"")
+        buildConfigField("String", "NEWS_API_KEY", "\"${getProps("NEWS_API_KEY")}\"")
+        buildConfigField("String", "HIBP_API_KEY", "\"${getProps("HIBP_API_KEY")}\"")
     }
 
     buildTypes {
@@ -57,4 +57,16 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.coil.compose)
+    implementation("com.google.firebase:firebase-appcheck-playintegrity:17.1.0")
+}
+
+fun getProps(propName: String): String {
+    val propsFile = rootProject.file("local.properties")
+    return if (propsFile.exists()) {
+        val props = java.util.Properties()
+        props.load(java.io.FileInputStream(propsFile))
+        props.getProperty(propName) ?: ""
+    } else {
+        ""
+    }
 }
